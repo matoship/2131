@@ -1,0 +1,68 @@
+import java.util.*;
+public class test {
+    public static void main(String[] args) {
+        System.out.println("input the string");
+        Scanner input = new Scanner(System.in);
+        String x = input.nextLine();
+        System.out.println("input the shifts");
+        int shif=input.nextInt();
+        System.out.println("input the number of letters per group");
+        int nums=input.nextInt();
+        System.out.println(encryptString(x,shif,nums));
+    }
+
+    public static String normlizeText(String x) {
+        String s="";
+        for (int i = 0; i <x.length(); i++) {
+            char z= x.charAt(i);
+            boolean y = Character.isLetter(z);
+            if(y){
+                s=s+z;
+            }
+        }
+        return s;
+    }
+    public static String Caesarify(String x, int y){
+        String nst="";
+       for (int i = 0; i <x.length(); i++) {
+           char z= x.charAt(i);
+           int b=(int)z+y;
+           //System.out.print(b);
+           if(b>90) {
+               b = b - 26;
+           }
+           else if(b<65){
+               b=b+26;
+           }
+           char d=(char)b;
+           nst+=d;
+        }
+       return nst;
+    }
+    public static String groupify(String x, int y){
+        int len = x.length()%y;
+        System.out.println(len);
+        if(len!=0){
+            for(int i=0;i<(y-len);i++){
+                x=x+"x";
+            }
+        }
+        String ns1="";
+        int cnt=0;
+        for (int u =0; u<x.length(); u++){
+            ns1+=x.charAt(u);
+            cnt++;
+            if(cnt%y==0){
+                ns1+=" ";
+            }
+        }
+        return ns1;
+    }
+    public static String encryptString(String x, int shift, int size){
+        x = x.toUpperCase();
+        String y = normlizeText(x);
+        String code=Caesarify(y,shift);
+        String ha=groupify(code,size);
+        return ha;
+    }
+}
